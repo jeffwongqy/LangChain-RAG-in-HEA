@@ -5,7 +5,7 @@
 
 # Jenkins-Based CI/CD Pipeline for LangChain RAG in High Entropy Alloy Materials Informatics
 
-<img width="1000" height="450" alt="images" src="https://github.com/user-attachments/assets/b2328138-5b05-4dee-9b28-3cc592d9f1fb" />
+<img width="1000" height="450" alt="9ce19469-692a-4422-bd27-a4071e291ee7" src="https://github.com/user-attachments/assets/c7f04877-1bad-45c5-8587-d65b2309fbe3" />
 
 
 ## References
