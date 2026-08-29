@@ -32,6 +32,18 @@ PDF Upload → PDF Text Extraction → Text Chunking → Embedding Generation �
 
 When a user submits a question, the system retrieves the three most relevant text chunks from the uploaded paper. These chunks are then provided to Llama 3.2 as context for generating the answer.
 
+```python
+import streamlit as st
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_ollama import ChatOllama, OllamaEmbeddings
+from langchain_chroma import Chroma
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+
+```
+
 ### 4.1 PDF Upload
 
 The user uploads one HEA research paper through the Streamlit interface. The system accepts PDF files and saves the uploaded document for processing.
