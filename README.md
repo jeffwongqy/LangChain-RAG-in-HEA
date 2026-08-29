@@ -12,7 +12,7 @@ High-Entropy Alloys (HEAs) are advanced materials containing multiple principal 
 
 This project develops a High-Entropy Alloy Retrieval-Augmented Generation (RAG) platform using Streamlit, LangChain, Ollama, and ChromaDB. Users can upload a HEA research paper in PDF format and ask questions about its contents. The system retrieves relevant sections from the uploaded paper and uses the Llama 3.2 language model to generate concise answers based only on the retrieved information.
 
-## 2.Project Aim
+## 2. Project Aim
 The aim of this project is to develop a simple AI-assisted research platform for retrieving and answering questions from High-Entropy Alloy research papers using a local RAG architecture.
 
 ## 3. Project Objectives
