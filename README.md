@@ -36,42 +36,143 @@ When a user submits a question, the system retrieves the three most relevant tex
 
 The user uploads one HEA research paper through the Streamlit interface. The system accepts PDF files and saves the uploaded document for processing.
 
+```python
+pdf_file = st.file_uploader("Upload one HEA pdf file:", type = ["pdf"])
+```
+
 ### 4.2 Text Extraction
 
 PyPDFLoader reads the PDF and extracts its text page by page. The system also displays the number of pages detected.
+
+```python
+with open("hea_pdf", "wb") as f:
+    f.write(pdf_file.getbuffer())
+st.success("PDF uploaded Successfully")
+
+loader = PyPDFLoader("hea_pdf")
+documents = loader.load()
+st.write("Number of pages:", len(documents))
+```
 
 ### 4.3 Text Chunking
 
 The extracted text is divided into smaller sections using RecursiveCharacterTextSplitter.
 
 Chunk size: 1,000 characters
+
 Chunk overlap: 150 characters
 
 The overlap helps maintain context between neighbouring chunks.
+
+```python
+splitter = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 150)
+chunks = splitter.split_documents(documents)
+st.write("Number of chunks:", len(chunks))
+```
 
 ### 4.4 Embedding Generation
 
 Each text chunk is converted into a numerical vector using the Ollama nomic-embed-text embedding model. These vectors represent the semantic meaning of the text.
 
+```python
+embeddings = OllamaEmbeddings(model = "nomic-embed-text")
+```
+
 ### 4.5 Vector Database
 
 The embeddings and corresponding text chunks are stored in a Chroma vector store. This allows the system to efficiently search for information relevant to a user's question.
+
+```python
+vectorstore = Chroma.from_documents(documents = chunks, embedding = embeddings)
+```
 
 ### 4.6 Question Retrieval
 
 When the user enters a question, the retriever performs a similarity search against the stored document chunks and retrieves the top 3 most relevant chunks.
 
+```python
+retriever = vectorstore.as_retriever(search_kwargs = {'k': 3})
+```
+
 ### 4.7 Prompt Construction
 
 The retrieved chunks are inserted into a predefined LangChain prompt template. The prompt instructs the LLM to answer using only the retrieved context and to preserve numerical values, units, alloy compositions, and experimental conditions.
+
+```python
+prompt = ChatPromptTemplate.from_template(
+        
+    """
+    You are an expert research assistant in High-Entropy Alloys (HEAs).
+    
+    Use ONLY the information provided in the context to answer the question. 
+    
+    Instructions:
+    1. Give a clear and concise answer.
+    2. Include specific values, units, alloy compositions, temperature, processing conditions, 
+       and properties when available.
+    3. Do not change, estimate or invent numerical values.
+    4. Distinguish experimental results from general statements.
+    5. If information is conflicting, mention the conflict.
+    6. Do not use outside knowledge.
+    7. If the answer is not in the context, say: "The answer cannot be found in the provided pdf."
+    8. Use bullet points when useful. 
+    
+    Focus on 
+    - Alloy composition
+    - Processing and manufactuing
+    - Heat treatment
+    - Crystal structures and phases
+    - Microstructure
+    - Mechanical Properties
+    - Strength, hardness, and ductility
+    - Corrosion and thermal properties
+    - Experimental results
+    - key findings and conclusion
+    
+    Context:
+    {context}
+    
+    Question:
+    {question}
+    
+    Answer:
+    
+    """)
+```
 
 ### 4.8 Answer Generation
 
 The retrieved context and user's question are passed to Llama 3.2 through Ollama. The model generates a concise answer based on the information retrieved from the paper.
 
+```python
+llm = ChatOllama(model = "llama3.2", temperature = 0)
+
+rag_chain = (
+        {
+            "context": retriever, 
+            "question": lambda x : x
+        }
+        | prompt 
+        | llm 
+        | StrOutputParser()
+    )
+```
+
 ### 4.9 Display Results
 
 The generated answer is returned to the Streamlit interface and displayed under the Answer section.
+
+```python
+question = st.text_input("Ask a question about HEA paper:")
+    
+if question:
+    with st.spinner("Searching the PDF..."):
+        answer = rag_chain.invoke(question)
+        
+    st.subheader("Answer:")
+    
+    st.write(answer)
+```
 
 
 ## 5. Limitations
