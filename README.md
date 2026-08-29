@@ -200,5 +200,8 @@ The current implementation has several limitations:
 
 The expected outcome is a lightweight and user-friendly HEA research assistant that can quickly retrieve relevant information from technical papers and provide concise answers without relying on external knowledge. The project demonstrates how RAG, LangChain, local LLMs, vector databases, and Streamlit can be integrated for materials informatics research.
 
+## 7. Sample Output
+
+
 ## References
 [1] Wang, J., Kwon, H., Kim, H. S., & Lee, B.-J. (2023). A neural network model for high entropy alloy design. Npj Computational Materials, 9(1). https://doi.org/10.1038/s41524-023-01010-x
