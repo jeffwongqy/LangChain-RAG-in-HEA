@@ -3,7 +3,7 @@
 #### _A*STAR Institute of High Performance Computing (IHPC) ARIA Internship Project on Materials Informatics 2024_
 
 
-# LangChain RAG in HEA
+# LangChain RAG in High Entropy Alloys
 
 <img width="1000" height="450" alt="9ce19469-692a-4422-bd27-a4071e291ee7" src="https://github.com/user-attachments/assets/c7f04877-1bad-45c5-8587-d65b2309fbe3" />
 
