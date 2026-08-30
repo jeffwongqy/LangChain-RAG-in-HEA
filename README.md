@@ -201,6 +201,10 @@ The current implementation has several limitations:
 The expected outcome is a lightweight and user-friendly HEA research assistant that can quickly retrieve relevant information from technical papers and provide concise answers without relying on external knowledge. The project demonstrates how RAG, LangChain, local LLMs, vector databases, and Streamlit can be integrated for materials informatics research.
 
 ## 7. Sample Output
+<img width="1917" height="967" alt="pic1" src="https://github.com/user-attachments/assets/cff2a0b4-bdcc-49f6-916b-7bfcd66740ea" />
+
+<img width="1917" height="967" alt="pic2" src="https://github.com/user-attachments/assets/f3ba4e42-3e33-4a80-8344-af3dd4817186" />
+
 
 
 ## References
